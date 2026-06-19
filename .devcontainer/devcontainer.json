@@ -1,0 +1,41 @@
+{
+    "name": "ROS Noetic",
+
+    "dockerComposeFile": [
+        "../docker/docker-compose.yml"
+    ],
+
+    "service": "ros1",
+
+    "workspaceFolder": "/home/ros/catkin_ws",
+
+    "shutdownAction": "stopCompose",
+
+    "remoteUser": "ros",
+
+    "postCreateCommand": "bash -c 'catkin init || true'",
+
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-iot.vscode-ros",
+                "ms-vscode.cpptools",
+                "ms-vscode.cmake-tools",
+                "ms-python.python",
+                "ms-azuretools.vscode-docker",
+                "twxs.cmake",
+                "eamodio.gitlens"
+            ],
+
+            "settings": {
+                "python.defaultInterpreterPath": "/usr/bin/python3",
+
+                "ros.distro": "noetic",
+
+                "terminal.integrated.defaultProfile.linux": "bash",
+
+                "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
+            }
+        }
+    }
+}

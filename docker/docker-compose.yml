@@ -1,0 +1,54 @@
+services:
+  ros1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        USERNAME: ros
+        USER_UID: ${USER_UID}
+        USER_GID: ${USER_GID}
+
+    container_name: ros_noetic
+
+    network_mode: host
+    
+    ipc: host
+    
+    gpus: all
+
+    stdin_open: true
+    tty: true
+
+    working_dir: /home/ros/catkin_ws
+
+    environment:
+      DISPLAY: ${DISPLAY}
+      XAUTHORITY: ${XAUTHORITY}
+      QT_X11_NO_MITSHM: "1"
+      TERM: xterm-256color
+      XDG_RUNTIME_DIR: /tmp/runtime-ros
+      NVIDIA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: all
+
+    volumes:
+      # ROS packages
+      - ../src:/home/ros/catkin_ws/src
+
+      # Persistent build artifacts
+      - catkin_build:/home/ros/catkin_ws/build
+      - catkin_devel:/home/ros/catkin_ws/devel
+      - catkin_logs:/home/ros/catkin_ws/logs
+
+      # X11
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /etc/localtime:/etc/localtime:ro
+      - ${XAUTHORITY}:${XAUTHORITY}:ro
+
+    devices:
+      - /dev/dri:/dev/dri
+      
+
+volumes:
+  catkin_build:
+  catkin_devel:
+  catkin_logs:
