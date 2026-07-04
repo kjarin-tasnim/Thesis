@@ -4,6 +4,7 @@ devel/
 logs/
 install/
 log/
+.catkin_tools/
 
 # VS Code
 .vscode/
