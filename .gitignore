@@ -3,6 +3,7 @@ build/
 devel/
 logs/
 install/
+log/
 
 # VS Code
 .vscode/
@@ -16,3 +17,9 @@ __pycache__/
 
 # OS
 .DS_Store
+docker/.env
+#rl outputs
+models/
+videos/
+tensorboard/
+.ipynb_checkpoints/

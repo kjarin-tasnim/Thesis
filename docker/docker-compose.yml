@@ -32,7 +32,7 @@ services:
 
     volumes:
       # ROS packages
-      - ../src:/home/ros/catkin_ws/src
+      - ..:/home/ros/catkin_ws
 
       # Persistent build artifacts
       - catkin_build:/home/ros/catkin_ws/build

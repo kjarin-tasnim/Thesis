@@ -2,6 +2,7 @@ FROM osrf/ros:noetic-desktop-full
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV ROS_DISTRO=noetic
+ENV PYTHONUNBUFFERED=1
 
 # ----------------------------
 # Create normal (non-root) user
@@ -50,6 +51,8 @@ RUN apt-get update && apt-get install -y \
     iputils-ping \
     usbutils \
     x11-apps \
+    libgl1 \
+    libglib2.0-0 \
     libglu1-mesa \
     freeglut3-dev \
     ros-noetic-rviz \
@@ -66,14 +69,31 @@ RUN apt-get update && apt-get install -y \
     ros-noetic-gazebo-ros-control \
     ros-noetic-gazebo-plugins \
  && rm -rf /var/lib/apt/lists/*
+ 
+RUN python3 -m pip install --upgrade pip setuptools wheel
 
-RUN pip3 install \
-    numpy \
-    scipy \
-    matplotlib \
-    pandas \
+RUN pip3 install --no-cache-dir \
+    numpy==1.24.4 \
+    scipy==1.10.1 \
+    matplotlib==3.7.5 \
+    pandas==2.0.3 \
+    pygame==2.6.1 \
     transforms3d \
-    pyserial
+    pyserial \
+    opencv-python==4.11.0.86 \
+    gymnasium==1.0.0 \
+    stable-baselines3==2.4.1 \
+    tensorboard==2.14.0 \
+    protobuf==4.25.3 \
+    torch==2.4.1 \
+    torchvision==0.19.1 \
+    torchaudio==2.4.1 \
+    tqdm==4.68.3 \
+    imageio==2.35.1 \
+    imageio-ffmpeg==0.5.1 \
+    jupyterlab==4.3.8 \
+    ipykernel==6.29.5
+
 
 RUN rosdep init || true
 
@@ -81,8 +101,7 @@ COPY ros_entrypoint.sh /
 
 RUN chmod +x /ros_entrypoint.sh
 
-RUN mkdir -p /home/${USERNAME}/catkin_ws/src && \
-    chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}
+RUN chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}
 
 USER ${USERNAME}
 
